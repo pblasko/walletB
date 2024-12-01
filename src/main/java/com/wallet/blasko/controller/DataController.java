@@ -1,6 +1,7 @@
 package com.wallet.blasko.controller;
 
 import com.wallet.blasko.model.Account;
+import com.wallet.blasko.model.NewDate;
 import com.wallet.blasko.model.NewItem;
 import com.wallet.blasko.model.SendingItem;
 import com.wallet.blasko.service.AccountService;
@@ -42,6 +43,11 @@ public class DataController {
     @PostMapping("/deleteItem")
     public String deleteItem(@RequestBody NewItem newItem){
         return itemService.deleteItem(newItem);
+    }
+
+    @PostMapping("/setNewDate")
+    public String setNewDate(@RequestBody NewDate newDate){
+        return itemService.setCurrentDate(newDate.getDate());
     }
 
 }

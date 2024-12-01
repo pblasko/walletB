@@ -24,6 +24,8 @@ public class ItemService {
     @Autowired
     private ItemRepository itemRepository;
 
+    private LocalDate currentDate = LocalDate.now();
+
     public SendingItem createSendingItem () {
         SendingItem sendingItem = new SendingItem();
         sendingItem.setAccounts(getAllAccounts());
@@ -37,13 +39,12 @@ public class ItemService {
     }
 
     private List<Category> getAllCategories() {
-        return categoryRepository.findAll();
+        return categoryRepository.findByIdGreaterThan(Long.valueOf(4));
     }
 
     private List<Item> getAllActualItems() {
-        LocalDate now = LocalDate.now();
-        int year = now.getYear();
-        int month = now.getMonthValue();
+        int year = currentDate.getYear();
+        int month = currentDate.getMonthValue();
         return itemRepository.findAllByYearAndMonth(year, month);
     }
 
@@ -117,6 +118,11 @@ public class ItemService {
         }
         itemRepository.deleteById(newItem.getId());
         return "successful setting item";
+    }
+
+    public String setCurrentDate(LocalDate date) {
+        this.currentDate = date;
+        return "" + date;
     }
 
 }
